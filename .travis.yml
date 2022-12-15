@@ -10,8 +10,8 @@ services:
 
 # These berfore_install steps are run before the test suites run.
 # Here we are using the -t in order to tag the image because we can copy and paste the  image id ad this is an automated process. We can then use this tag to start the container.
-  before_install:
-    - docker build -t ottojones/docker-react -f Dockerfile.dev .
+before_install:
+  - docker build -t ottojones/docker-react -f Dockerfile.dev .
 
 # The script section is a series of commands that are needed to run the test suites
 # Notice that we are using the tag from above to run the container (ottojones/docker-react)

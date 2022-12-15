@@ -1,0 +1,20 @@
+# Setting the language
+language: generic
+
+# This command is to give super user permissions to travis for docker
+sudo: required
+
+# This is installing docker cli into the container for the travis build
+services: 
+  - docker
+
+# These berfore_install steps are run before the test suites run.
+# Here we are using the -t in order to tag the image because we can copy and paste the  image id ad this is an automated process. We can then use this tag to start the container.
+  before_install:
+    - docker build -t ottojones/docker-react -f Dockerfile.dev .
+
+# The script section is a series of commands that are needed to run the test suites
+# Notice that we are using the tag from above to run the container (ottojones/docker-react)
+# Note: The -e is setting an env variable and in this case the env variable is the CI=true. The CI=true is forcing Jest (test runner) not to watch after test is complete and rather to just exit the test.
+script: 
+  - docker run -e CI=true ottojones/docker-react npm run test

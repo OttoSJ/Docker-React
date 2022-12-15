@@ -18,3 +18,29 @@ before_install:
 # Note: The -e is setting an env variable and in this case the env variable is the CI=true. The CI=true is forcing Jest (test runner) not to watch after test is complete and rather to just exit the test.
 script: 
   - docker run -e CI=true ottojones/docker-react npm run test
+
+deploy: 
+  # Here we are listing the provider. So this could be elasticbeanstalk or digitalocean etc.. This will let travis what set of instruction to use the deploy this app
+  provider: elasticbeanstalk
+
+  # Here we are letting AWS what region our elastic beanstalk app was created in
+  region: "us-east-1"
+
+  # Here we are providing the name of the app that we gave when we created our elastic beanstalk instance. This infomation will be in the upper right hand corner of the dashboard under Application name.
+
+  app: "docker-react"
+
+  # (AWS) This is the name that ends with -env in the upper right hand corner of the app dashboard
+  env: "Dockerreact-env"
+
+  # Enter the name of the s3 bucket. See step 8 for how find the bucket name
+  bucket_name: "elasticbeanstalk-us-east-1-379793396287"
+
+  # By default the bucket_path is the app name from above (docker-react)
+  bucket_path: "docker-react"
+
+  # This is letting Travis know that when ever we push to main, then deploy new code to production
+  on: 
+    branch: main
+  access_key_id: $AWS_ACCESS_ID
+  secret_access_key: $AWS_SECRET_KEY

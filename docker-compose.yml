@@ -1,22 +1,8 @@
-version: "3"
+version: '3'
 services:
-  web: # <== Container 1
+  web: 
     build:
-      context: . # <== Specifies where the dir/files will be pulled from.
-      dockerfile: Dockerfile.dev # <== Specifies where to locate the Dockerfile.dev
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"
-    volumes:
-      - /app/node_modules # <== This is pointing the container to the local file.
-      - .:/app # <== This is coping local dir/files into docker container.
-  tests: # <== Container 2
-    build:
-      context: . # <== Specifies where the dir/files will be pulled from.
-      dockerfile: Dockerfile.dev # <== Specifies where to locate the Dockerfile.dev
-    volumes:
-      - /app/node_modules
-      - .:/app
-    command: ["npm", "run", "test"] # <== This command overrides the CMD command in the Dockerfile.dev
-
-
-    # Note: Another way to run these test is to remove this test service altogether and follow these steps = 1 docker-compose up 2 docker ps (gets the running containers id) 3 docker exec -it <container id> <command you want to run>
+      - '80:80'

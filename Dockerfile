@@ -15,5 +15,7 @@ COPY ./ ./
 RUN npm run build
 
 FROM nginx 
-EXPOSE 80
+
+# Exposing the port for production 
+EXPOSE 80 
 COPY --from=builder /app/build /usr/share/nginx/html
